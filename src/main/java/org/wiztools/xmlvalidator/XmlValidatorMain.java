@@ -24,6 +24,9 @@ public class XmlValidatorMain {
 
     @Argument(value="v", alias="verbose", description = "Verbose output")
     boolean isVerbose;
+    
+    @Argument(value="w", alias="warnings", description = "Treat warnings as errors")
+    boolean isWarnings;
 
     private static final String lineSeparator = System.getProperty("line.separator");
     private static final String doubleLineSeparator = lineSeparator + lineSeparator;
@@ -55,7 +58,7 @@ public class XmlValidatorMain {
         // Compile the schemas:
         Schema wxs = null;
         try{
-            wxs = parser.wxsSchema!=null? SchemaUtil.getWXSSchema(new File(parser.wxsSchema)): null;
+            wxs = parser.wxsSchema!=null? SchemaUtil.getWXSSchema(new File(parser.wxsSchema), parser.isVerbose, parser.isWarnings): null;
             if(wxs != null && parser.isVerbose) {
                 System.out.printf(msg_compile_success, parser.wxsSchema);
             }
