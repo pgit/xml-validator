@@ -22,7 +22,10 @@ public class SchemaUtil {
     private SchemaUtil(){}
 
 
-    public static Schema getWXSSchema(File file, final boolean warnings, final boolean verbose) throws SAXException {
+    public static Schema getWXSSchema(File file) throws SAXException {
+    	return getWXSSchema(file, false, false);
+    }
+    public static Schema getWXSSchema(File file, final boolean warningsAsError, final boolean verbose) throws SAXException {
         SchemaFactory fac = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         fac.setErrorHandler(new ErrorHandler() {        	
         	public void fatalError(SAXParseException e) throws SAXException {
@@ -32,7 +35,7 @@ public class SchemaUtil {
                 throw e;
             }
             public void warning(SAXParseException e) throws SAXException {
-            	if (warnings)
+            	if (warningsAsErrors)
             		throw e;
             	else if (verbose)
             		System.out.println(e.toString());
